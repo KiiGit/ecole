@@ -50,6 +50,7 @@
         'report/report_certificate.xml',
         'report/report_school_certificate.xml',
         'report/report_gantt_planning.xml',
+		test hihi
 
     ],
     # only loaded in demonstration mode
