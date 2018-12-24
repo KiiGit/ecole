@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="ecole.report_school_certificate">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h4 class="school_address">
+                            <span t-field="o.school_name_id.establishment_wording"/><br/>
+                            <span t-field="o.school_name_id.establishment_address"/><br/>
+                            <span t-field="o.school_name_id.establishment_cp"/>
+                            <span t-field="o.school_name_id.establishment_city"/><br/>
+                            Tél. : <span t-field="o.school_name_id.establishment_phone"/><br/>
+                            Fax : <span t-field="o.school_name_id.establishment_fax"/><br/>
+                            Courriel : <span class="mail_underline" t-field="o.school_name_id.establishment_mail"/>
+                        </h4>
+
+                        <h2 class="title_school_certificate">CERTIFICAT DE SCOLARITE <span t-field="o.school_year_id.school_years"/></h2>
+
+                        <div class="content_school_certificate">
+                            <p>Je soussignée, <span t-field="o.school_name_id.establishment_manager"/>, directrice de l'école <span t-field="o.school_name_id.establishment_wording"/>,
+                            certifie que l'élève : </p>
+                            <p><span t-field="o.partner_id.name"/></p>
+                            <p>Né(e) le : <span t-field="o.partner_id.birthdate_date"/></p>
+                            <p>Domiciliée : <span t-field="o.partner_id.street_number_id.name"/> <span t-field="o.partner_id.street_id.name"/><br/>
+                            <span t-field="o.partner_id.zip_id.name"/> <span t-field="o.partner_id.city_id.name"/></p>
+                            <p>Est inscrit(e) à l'école en classe de <span t-field="o.school_level_id.name"/> pour l'année scolaire <span t-field="o.school_year_id.school_years"/>.</p>
+                        </div>
+                        <div class="school_certificate_signature">
+                            <p><span t-field="o.school_name_id.city_id.name"/>, le <span t-esc="time.strftime('%d/%m/%Y')"/></p>
+                            <p>La directrice</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report id="ecole.report_school_certif"
+            name="ecole.report_school_certificate"
+            file="ecole.report_school_certificate"
+            model="ecole.partner.school"
+            report_type="qweb-html"
+            string="School certificate"
+            paperformat="A4_French_Format"
+            groups="ecole.group_ecole_inscription_scolaire"
+            menu="True" />
+</odoo>

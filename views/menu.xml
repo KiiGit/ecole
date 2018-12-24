@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <menuitem id="school_menu"
+                  name="School"
+                  sequence="0"/>
+
+        <menuitem id="menu_school_content"
+                  parent="school_menu"
+                  name="School"/>
+
+        <menuitem id="ecole_listeleve"
+                  name="School Childrens"
+                  action="elevelist"
+                  parent="menu_school_content"
+                  groups="ecole.group_ecole_inscription_scolaire"
+                  sequence="1" />
+
+        <menuitem id="ecole_listcantine"
+                  name="Catering"
+                  action="ecole.cantinelist"
+                  parent="menu_school_content"
+                  groups="ecole.group_ecole_restauration_scolaire"
+                  sequence="2" />
+
+        <menuitem id="ecole_listdayscantine"
+                  name="Catering - days details"
+                  action="ecole.cantinedayslist"
+                  parent="menu_school_content"
+                  groups="ecole.group_ecole_restauration_scolaire"
+                  sequence="3" />
+
+        <menuitem id="ecole_listgarderie"
+                  name="Nursery"
+                  action="ecole.garderielist"
+                  parent="menu_school_content"
+                  groups="ecole.group_ecole_garderie"
+                  sequence="4" />
+
+        <menuitem id="menu_param_content"
+                  parent="school_menu"
+                  groups="ecole.group_admin_ecole"
+                  name="Parameters"/>
+
+        <menuitem id="ecole_listanneescolaire"
+                  name="School years"
+                  action="ecole.anneescolairelist"
+                  parent="menu_param_content"
+                  groups="ecole.group_admin_ecole"
+                  sequence="5" />
+
+        <menuitem id="ecole_halfpension_place"
+                  name="Restoration place"
+                  action="ecole.halfpension_place"
+                  parent="menu_param_content"
+                  groups="ecole.group_admin_ecole"
+                  sequence="6" />
+
+        <menuitem id="ecole_nursery_place"
+                  name="Nursery place"
+                  action="ecole.nursery_place"
+                  parent="menu_param_content"
+                  groups="ecole.group_admin_ecole"
+                  sequence="7" />
+
+        <menuitem id="ecole_zone_code"
+                  name="Zone Code"
+                  action="ecole.zone_code"
+                  parent="menu_param_content"
+                  groups="ecole.group_admin_ecole"
+                  sequence="8" />
+
+        <menuitem id="ecole_param_APS"
+                  name="APS - Extracurricular activity"
+                  action="ecole.param_APS"
+                  parent="menu_param_content"
+                  groups="ecole.group_admin_ecole"
+                  sequence="9" />
+</odoo>

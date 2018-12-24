@@ -1,0 +1,55 @@
+.entete_report_certificate {
+    width: 35% !important;
+}
+
+.entete_report_certificate .entete_title_report_certificate{
+    font-size: 14px;
+    text-align: center;
+}
+
+.entete_report_certificate .entete_content_report_certificate{
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.title_report_certificate{
+    margin-top: 120px;
+    margin-bottom: 120px;
+    text-align: center;
+}
+
+.title_report_certificate p{
+    font-size:25px;
+    font-weight:bold;
+    text-decoration:underline;
+}
+
+.content_report_certificate{
+    width: 600px;
+    font-size: 18px;
+    margin: auto;
+}
+.content_report_certificate p {
+    text-align: left;
+}
+
+.content_report_certificate span, .signature_report_certificate span {
+    font-weight:bold;
+}
+
+.signature_report_certificate{
+    width: 40%;
+    margin-top: 120px;
+    margin-left: 450px;
+    font-size: 16px;
+}
+.signature_report_certificate .signature_report_certificate_title{
+    margin-bottom: 100px;
+}
+
+.city_coordinates_report_certificate{
+    margin-top: 120px;
+    text-align: center;
+    font-size: 11px;
+}

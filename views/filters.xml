@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!-- RECHERCHE ET FILTRES -->
+
+    <record id="myfavorite_filter_catering" model="ir.filters">
+        <field name="name">Catering - End of year break</field>
+        <field name="model_id">ecole.partner.school</field>
+        <field name="user_id" eval="False"/>
+        <field name="is_default">False</field>
+        <field name="domain">[('period_school_year','=',True),('default_school_year','=',False),('half_pension_previous','=',True)]</field>
+        <field name="context">{'group_by': ['school_name_id', 'school_level_id']}</field>
+    </record>
+
+    <record model="ir.ui.view" id="student_view_search">
+        <field name="name">Student search</field>
+        <field name="model">ecole.partner.school</field>
+        <field name="arch" type="xml">
+            <search name="Student">
+                <field name="partner_id" />
+                <field name="school_year_id" />
+                <field name="school_name_id" />
+                <field name="school_level_id" />
+                <!-- FILTRE-->
+                <filter string="Current year" name="anneescolaire" domain="[('default_school_year','=',True),('period_school_year','=',False)]"/>
+                <filter string="Next year" name="anneescolairesuivante" domain="[('period_school_year','=',True),('default_school_year','=',False)]"/>
+                <filter string="Observations" name="observations" domain="[('half_pension_text','=',True)]" groups="ecole.group_ecole_restauration_scolaire" />
+                <separator />
+                <filter string="allergy" name="allergy" domain="[('half_pension_allergy','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <filter string="Without pork" name="withoutpork" domain="[('half_pension_without_pork','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <filter string="Without meat" name="withoutmeat" domain="[('half_pension_without_meat','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <filter string="Without bulletin" name="withoutbulletin" domain="[('half_pension_without_bulletin','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <separator />
+                <filter string="Registered school catering" name="inscritcantine" domain="[('half_pension','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <separator />
+                <filter string="Not registered school catering" name="pasinscritcantine" domain="[('half_pension','=',False)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <separator />
+                <filter string="Précédemment inscrit" name="precedemmentinscritcantine" domain="[('half_pension_previous','=',True)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <separator />
+                <filter string="Précédemment non inscrit" name="precedemmentnoninscritcantine" domain="[('half_pension_previous','=',False)]" groups="ecole.group_ecole_restauration_scolaire"/>
+                <!-- GROUPE -->
+                <group expand="0" string="Group By">
+                    <filter string="School establishment" name="etablissements" domain="[]" context="{'group_by':'school_name_id'}"/>
+                    <filter string="School level" name="niveaux" domain="[]" context="{'group_by':'school_level_id'}"/>
+                    <filter string="School year" name="anneescolaire2" domain="[]" context="{'group_by':'school_year_id'}"/>
+                    <filter string="School catering" name="demipension" domain="[]" context="{'group_by':'half_pension'}" groups="ecole.group_ecole_restauration_scolaire"/>
+                    <filter string="Nursery morning" name="garderie" domain="[]" context="{'group_by':'nursery_morning'}" groups="ecole.group_ecole_garderie"/>
+                    <filter string="Nursery evening" name="garderie" domain="[]" context="{'group_by':'nursery_evening'}" groups="ecole.group_ecole_garderie"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

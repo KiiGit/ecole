@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vue Tree enfants scolarisés jours détaillés cantine-->
+    <record model="ir.ui.view" id="halfpension_days_details_view_tree">
+        <field name="name">halfpension.days.details.view.tree</field>
+        <field name="model">ecole.partner.school</field>
+        <field name="arch" type="xml">
+            <tree default_order="half_pension_id" string="school_halfpension_days_details_tree">
+                <field name="partner_id" readonly="1" />
+                <field name="half_pension" />
+                <field name="half_pension_id" />
+                <field name="half_pension_begin_date" />
+                <field name="half_pension_end_date" />
+                <field name="half_pension_monday" />
+                <field name="half_pension_tuesday" />
+                <field name="half_pension_thursday" />
+                <field name="half_pension_friday" />
+                <field name="half_pension_occasional" />
+                <field name="default_school_year" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+<!--    <record id="view_halfpension_planning_timeline" model="ir.ui.view">
+        <field name="model">ecole.partner.school</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline date_start="date_start"
+                      date_stop="date_end"
+                      string="Tasks"
+                      default_group_by="partner_id"
+                      zoomKey="ctrlKey"
+                      colors="#ec7063:half_pension == false;#2ecb71:kanban_state=='done';">
+            </timeline>
+        </field>
+    </record>-->
+
+    <record model='ir.actions.act_window' id='ecole.cantinedayslist'>
+        <field name="name">Student school meals list details</field>
+        <field name="res_model">ecole.partner.school</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_anneescolaire':1,'search_default_inscritcantine':1,'search_default_etablissements':1,'search_default_niveaux':1}</field> <!-- PERMET D'AJOUTER FILTRE PAR DEFAULT-->
+    </record>
+
+    <record id="act_halfpension_days_details_tree_view" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="halfpension_days_details_view_tree"/>
+        <field name="act_window_id" ref="ecole.cantinedayslist"/>
+    </record>
+</odoo>

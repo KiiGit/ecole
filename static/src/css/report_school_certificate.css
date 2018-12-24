@@ -1,0 +1,22 @@
+.school_address .mail_underline{
+    text-decoration: underline;
+}
+
+.title_school_certificate {
+    text-align: center;
+    margin: 100px 0;
+    font-size: 25px;
+}
+
+.content_school_certificate span {
+    font-weight:bold;
+}
+
+.content_school_certificate p, .school_certificate_signature p {
+    font-size: 16px;
+}
+
+.school_certificate_signature {
+    width : 40%;
+    margin: 400px 0 0 500px;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+
+<!-- GENERATION DU PLANNING GANTT -->
+        <record id="student_planning_view" model="ir.ui.view">
+            <field name="name">Student Gantt Planning</field>
+            <field name="model">ecole.gantt.planning</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group groups="ecole.group_ecole_inscription_scolaire" >
+                        <field name="school_name_id" />
+                        <field name="school_level_id" />
+                        <field name="begin_date" required="True" />
+                        <field name="end_date" required="True" />
+                        <field name="student_ids" widget="many2many_list">
+                            <tree string="Tree_view_update_student">
+                                <field name="partner_id" />
+                                <field name="half_pension_id" />
+                                <field name="half_pension_monday" />
+                                <field name="half_pension_tuesday" />
+                                <field name="half_pension_thursday" />
+                                <field name="half_pension_friday" />
+                                <field name="half_pension_occasional" />
+                            </tree>
+                            <form>
+                                <group col="2">
+                                    <div class="accessforbidden">
+                                        <p>Pas d'accès !</p>
+                                    </div>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                    <footer groups="ecole.group_ecole_inscription_scolaire">
+                        <button name="set_student_planning" string="Print previsonal planning" class="oe_right oe_highlight"
+                                type="object" />
+                        <button string="Cancel" class="oe_right" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="student_planning_halfpension_action"
+                    name="To generate a Gantt Planning"
+                    res_model="ecole.gantt.planning"
+                    src_model="ecole.partner.school"
+                    view_mode="form"
+                    view_id="student_planning_view"
+                    target="new"
+                    multi="True" />
+
+
+
+</odoo>

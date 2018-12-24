@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="ecole.report_planning_halfpension">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <!-- end variable declaration -->
+                        <div class="entete_report_planning">
+                            <span t-field="o.school_level_id.name"/>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report id="ecole.report_planning"
+            name="ecole.report_planning_halfpension"
+            file="ecole.report_planning_halfpension"
+            model="ecole.partner.school"
+            report_type="qweb-pdf"
+            string="To generate a previsional planning"
+            paperformat="A4_French_Format"
+            groups="ecole.group_ecole_inscription_scolaire"
+            menu="True" />
+</odoo>

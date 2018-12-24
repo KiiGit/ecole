@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_common" name="ecole_assets" inherit_id="report.assets_common">
+         <xpath expr="." position="inside">
+             <link href="/ecole/static/src/css/report_certificate.css" rel="stylesheet" />
+             <link href="/ecole/static/src/css/report_school_certificate.css" rel="stylesheet" />
+         </xpath>
+    </template>
+
+    <template id="ecole.report_certificate">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <!-- variable declaration -->
+                        <t t-set="adres" t-value="o.partner_id.contact_address.split()[:-1]"/>
+                        <!-- end variable declaration -->
+                        <div class="entete_report_certificate">
+                            <p class="entete_title_report_certificate">REPUBLIQUE FRANÇAISE<br/>DEPARTEMENT DES DEUX-SEVRES</p>
+                            <img t-attf-src="data:image/*;base64,{{o.school_name_id.city_picture}}"/>
+                            <p class="entete_content_report_certificate">
+                                Service Scolaire
+                                <br/><span t-field="o.school_name_id.school_service_address"/>
+                                <br/>Tél. : <span t-field="o.school_name_id.school_service_phone"/>
+                                <br/>Fax : <span t-field="o.school_name_id.school_service_fax"/>
+                                <br/><span t-field="o.school_name_id.school_service_mail"/>
+                            </p>
+                        </div>
+                        <div class="title_report_certificate">
+                                <p>CERTIFICAT D'INSCRIPTION</p>
+                        </div>
+                        <div class="content_report_certificate">
+                                <p>Je soussigné(e), <span t-field="o.school_name_id.connected_person"/>, adjoint(e) aux affaires scolaires,
+                                    certifie que l'élève <span t-field="o.partner_id"/> née le <span t-field="o.partner_id.birthdate_date"/>, résidant au <t t-esc="' '.join(adres)"/> ,
+                                    est inscrit(e) sur le registre de l'<span t-field="o.school_name_id.name"/>
+                                    et fréquente la classe de <span t-field="o.school_level_id.name"/>
+                                </p>
+                        </div>
+                        <div class="signature_report_certificate">
+                            <p class="signature_report_certificate_title">À <span t-field="o.school_name_id.city_id.name"/> , le  <span t-esc="time.strftime('%d/%m/%Y')"/>.
+                            <br/>L'adjoint(e) chargé(e) des affaires scolaires</p>
+                            <p><span t-field="o.school_name_id.connected_person"/></p>
+                        </div>
+                        <div class="city_coordinates_report_certificate">
+                            <p><span t-field="o.school_name_id.city_address_information"/><br/><span t-field="o.school_name_id.city_contact_information"/></p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!--<record id="ecole.ecole_report_certif" model="ir.actions.report.xml">-->
+        <!--<field name="paperformat_id" ref="ecole.A4_French_Format" />-->
+    <!--</record>-->
+
+    <report id="ecole.report_certif"
+            name="ecole.report_certificate"
+            file="ecole.report_certificate"
+            model="ecole.partner.school"
+            report_type="qweb-html"
+            string="Certificate of registration"
+            paperformat="A4_French_Format"
+            groups="ecole.group_ecole_inscription_scolaire"
+            menu="True" />
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="param_APS_view_form">
+        <field name="name">param_APS_view_form</field>
+        <field name="model">ecole.aps</field>
+        <field name="arch" type="xml">
+            <form string="param_APS_view_form">
+                <sheet>
+                    <group col="2">
+                        <field name="name" />
+                        <field name="ref_service" />
+                    </group>
+                    <group col="2">
+                        <field name="zone_code_ids" widget="many2many_tags" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="param_APS_view_tree">
+        <field name="name">param_APS_view_tree</field>
+        <field name="model">ecole.aps</field>
+        <field name="arch" type="xml">
+            <tree string="param_APS_view_tree">
+                <field name="name" />
+                <field name="ref_service" />
+                <field name="zone_code_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='ecole.param_APS'>
+        <field name="name">APS - Extracurricular activity</field>
+        <field name="res_model">ecole.aps</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="act_param_APS_form_view" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="param_APS_view_form"/>
+        <field name="act_window_id" ref="ecole.param_APS"/>
+    </record>
+
+
+    <record id="act_param_APS_tree_view" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="param_APS_view_tree"/>
+        <field name="act_window_id" ref="ecole.param_APS"/>
+    </record>
+
+</odoo>

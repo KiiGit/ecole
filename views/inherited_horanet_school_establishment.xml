@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Rajout d'un champs image dans la vue form de horanet.school.establishment -->
+    <record model="ir.ui.view" id="city_picture">
+        <field name="name">city_picture</field>
+        <field name="model">horanet.school.establishment</field>
+        <field name="inherit_id" ref="horanet_school.horanet_school_establishment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group[last()]" position="before">
+                <group string="Establishment informations" col="4" >
+                    <field name="establishment_wording" />
+                    <field name="establishment_mail" />
+                    <field name="establishment_phone" />
+                    <field name="establishment_fax" />
+                    <field name="establishment_address" />
+                    <field name="establishment_cp" />
+                    <field name="establishment_city" />
+                    <field name="establishment_manager" />
+                </group>
+                <group string="City informations" col="2" >
+                    <field name="city_picture" widget="image"/>
+                    <field name="city_address_information" />
+                    <field name="city_contact_information" />
+                </group>
+                <group string="School service informations" col="4" >
+                    <field name="school_service_address" />
+                    <field name="school_service_mail" />
+                    <field name="school_service_phone" />
+                    <field name="school_service_fax" />
+                    <field name="connected_person" />
+                    <field name="signature_connected_person" widget="image"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

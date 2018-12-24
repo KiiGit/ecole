@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--For CSS - Backend-->
+    <template id="assets_backend" inherit_id="web.assets_backend">
+         <xpath expr="." position="inside">
+             <link rel="stylesheet" href="/ecole/static/src/css/style.css"/>
+         </xpath>
+    </template>
+
+<!--################################## ONGLET SCOLAIRE ############################################ -->
+    <record model="ir.ui.view" id="School_tab">
+        <field name="name">Add School Tab</field> <!-- Nom de l'enregistrement -->
+        <field name="model">res.partner</field> <!-- Appel de l'objet -->
+        <field name="inherit_id" ref="base.view_partner_form"/> <!-- Héritage -->
+        <field name="priority">100</field> <!-- Priorité d'affichage de l'onglet -->
+        <field name="arch" type="xml"> <!-- Début du contenu de l'onglet -->
+            <!-- Ajout d'un onglet scolaire dans la gestion des citoyens -->
+            <xpath expr="//page[last()]" position="after">
+                <page name="scolaire_tab" string="School" attrs="{'invisible': [('difference_age','=', False)]}">
+                    <group col="2" groups="ecole.group_ecole_restauration_scolaire">
+                        <field name="compta_code" />
+                    </group>
+                    <group string="Citizen School" >
+                        <field name="difference_age" invisible="1" />
+                        <!--<field name="school_certificate" filename="filenameCertificate" />-->
+                        <field name="scholarship_ids" nolabel="1" colspan="2" context="{'default_partner_id': active_id, 'readonly_partner_id' : True}">
+                            <form string="Form_view_school">
+                                <sheet>
+                                    <group col="2">
+                                        <field name="partner_id" readonly="1"/>
+                                        <field name="school_year_id_rel" readonly="1"/>
+                                        <field name="school_lvl" invisible="1"/>
+                                    </group>
+                                    <notebook colspan="4">
+                                        <page name="school_registration" string="School registration">
+                                            <group col="4" string="Informations">
+                                                <field name="school_name_id" required="True" />
+                                                <field name="school_level_id" domain="[('id','>=',school_lvl)]"
+                                                       required="True" attrs="{'invisible': [('school_name_id','=', False)]}"/>
+                                            </group>
+                                            <group col="2">
+                                                <field name="school_year_id" required="True" />
+                                                <field name="school_registration" required="True" />
+                                                <field name="school_end_date" required="True" />
+                                            </group>
+                                            <group col="2" string="Extracurricular activity">
+                                                <field name="extracurricular_activity" />
+                                                <field name="extracurricular_activity_id" attrs="{'invisible': [('extracurricular_activity','=', False)]}" />
+                                            </group>
+                                        </page>
+                                        <page name="halfpension_tab" string="Catering" groups="ecole.group_ecole_restauration_scolaire">
+                                            <group col="4" string="Registration School Restoration">
+                                                <field name="half_pension" />
+                                                <field name="half_pension_unsubscribe" attrs="{'invisible': [('half_pension','=', False)]}"/>
+                                                <field name="half_pension_days_value" invisible="1" />
+                                                <field name="half_pension_status" invisible="1" />
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('half_pension','=', False)]}">
+                                                <field name="half_pension_id" attrs="{'required': [('half_pension','=', True)],
+                                                                                      'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_responsible_partner" attrs="{'required': [('half_pension','=', True)],
+                                                                                                       'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_begin_date" attrs="{'required': [('half_pension','=', True)],
+                                                                                              'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_end_date" attrs="{'required': [('half_pension','=', True)],
+                                                                                            'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('half_pension','=', False)]}">
+                                                <field name="half_pension_occasional" attrs="{'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_without_bulletin" attrs="{'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                            </group>
+                                            <group col="4" groups="ecole.group_ecole_restauration_scolaire" attrs="{'invisible': [('half_pension','=', False)]}">
+                                                <field name="half_pension_monday" attrs="{'readonly': ['|', ('half_pension_occasional','=', True),
+                                                                                                            ('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_allergy" attrs="{'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_tuesday" attrs="{'readonly': ['|', ('half_pension_occasional','=', True),
+                                                                                                             ('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_without_pork" attrs="{'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_wednesday" />
+                                                <field name="half_pension_without_meat" attrs="{'readonly': [('half_pension_unsubscribe','=', True)]}"/>
+                                                <field name="half_pension_thursday" attrs="{'readonly': ['|', ('half_pension_occasional','=', True),
+                                                                                                              ('half_pension_unsubscribe','=', True)]}"/><newline/>
+                                                <field name="half_pension_friday" attrs="{'readonly': ['|', ('half_pension_occasional','=', True),
+                                                                                                            ('half_pension_unsubscribe','=', True)]}"/>
+                                            </group>
+                                            <group col="2" attrs="{'invisible': [('half_pension','=', False)]}">
+                                                <field name="half_pension_text" placeholder="Comments..."/>
+                                            </group>
+                                        </page>
+                                        <page name="nursery_tab" string="Nursery" groups="ecole.group_ecole_garderie">
+                                            <group col="4" invisible="1">
+                                                <field name="nursery_morning_days_value" />
+                                                <field name="nursery_evening_days_value" />
+                                                <field name="nursery_status_morning" />
+                                                <field name="nursery_status_evening" />
+                                            </group>
+                                            <group col="2" >
+                                                <field name="nursery_wednesday_evening" />
+                                                <field name="nursery_wednesday_afternoon_name_id" attrs="{'invisible': [('nursery_wednesday_evening','=', False)]}" />
+                                            </group>
+                                            <group col="4" string="Nursery registration">
+                                                <field name="nursery_morning" />
+                                                <field name="nursery_evening" />
+                                                <field name="nursery_morning_unsubscribe" attrs="{'invisible': [('nursery_morning','=', False)]}" />
+                                                <field name="nursery_evening_unsubscribe" attrs="{'invisible': [('nursery_evening','=', False)]}" />
+                                                <field name="nursery_responsible_partner" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)],
+                                                                                                  'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)]}" />
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="nursery_name_id" attrs="{'required': [('nursery_morning','=', True)],
+                                                                                      'invisible': [('nursery_morning','=', False)],
+                                                                                      'readonly': [('nursery_morning_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_two_name_id" attrs="{'required': [('nursery_evening','=', True)],
+                                                                                          'invisible': [('nursery_evening','=', False)],
+                                                                                          'readonly': [('nursery_evening_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_monday_morning" attrs="{'invisible': [('nursery_morning','=', False)],
+                                                                                             'readonly': [('nursery_morning_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_monday_evening" attrs="{'invisible': [('nursery_evening','=', False)],
+                                                                                             'readonly': [('nursery_evening_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_tuesday_morning" attrs="{'invisible': [('nursery_morning','=', False)],
+                                                                                              'readonly': [('nursery_morning_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_tuesday_evening" attrs="{'invisible': [('nursery_evening','=', False)],
+                                                                                              'readonly': [('nursery_evening_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_wednesday_morning" attrs="{'invisible': [('nursery_morning','=', False)],
+                                                                                                'readonly': [('nursery_morning_unsubscribe','=', True)]}"/><newline/>
+                                                <field name="nursery_thursday_morning" attrs="{'invisible': [('nursery_morning','=', False)],
+                                                                                             'readonly': [('nursery_morning_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_thursday_evening" attrs="{'invisible': [('nursery_evening','=', False)],
+                                                                                               'readonly': [('nursery_evening_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_friday_morning" attrs="{'invisible': [('nursery_morning','=', False)],
+                                                                                             'readonly': [('nursery_morning_unsubscribe','=', True)]}"/>
+                                                <field name="nursery_friday_evening" attrs="{'invisible': [('nursery_evening','=', False)],
+                                                                                             'readonly': [('nursery_evening_unsubscribe','=', True)]}"/>
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="nursery_begin_date" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                         'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="nursery_end_date" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                       'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="nursery_text"/>
+                                            </group>
+                                            <group col="4" string="Permissions person 1" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="resp_civility1" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                     'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_name1" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                 'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_num1" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True)]}"/>
+                                                <field name="resp_address1" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                    'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_cp1" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                               'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_town1" attrs="{'required': ['|', ('nursery_morning','=', True), ('nursery_evening','=', True)],
+                                                                                 'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="resp_phone1" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_phonemobile1" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_filiation1" placeholder="father, mother, host family, ..." attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                            </group>
+                                            <group col="4" string="Permissions person 2" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="resp_civility2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_name2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_num2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_address2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_cp2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_town2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                            </group>
+                                            <group col="4" attrs="{'invisible': [('nursery_morning','=', False), ('nursery_evening','=', False)]}">
+                                                <field name="resp_phone2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_phonemobile2" attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                                <field name="resp_filiation2" placeholder="father, mother, host family, ..." attrs="{'readonly': [('nursery_morning_unsubscribe','=', True),('nursery_evening_unsubscribe','=', True),('nursery_wednesday_evening','=', False)]}"/>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </sheet>
+                            </form>
+                            <tree string="Tree_view_school">
+                                <field name="school_year_id" />
+                                <field name="school_registration" />
+                                <field name="school_end_date" />
+                                <field name="school_name_id" />
+                                <field name="school_level_id" />
+                                <field name="half_pension_tree_view" />
+                                <field name="half_pension_id" />
+                                <field name="nursery" />
+                                <field name="default_school_year" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record model="ir.ui.view" id="Compta_code_tab">
+        <field name="name">Compta code tab</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority">200</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='scolaire_tab']" position="after">
+                <page name="compta_code_tab" string="Foyer complément">
+                    <group string="Code compta">
+                        <field name="compta_code" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>-->
+</odoo>

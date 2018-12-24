@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="zone_code_view_form">
+        <field name="name">zone_code_view_form</field>
+        <field name="model">ecole.zone.code</field>
+        <field name="arch" type="xml">
+            <form string="zone_code_view_form">
+                <sheet>
+                    <group col="2">
+                        <field name="name" />
+                        <field name="zone_code" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="zone_code_view_tree">
+        <field name="name">zone_code_view_tree</field>
+        <field name="model">ecole.zone.code</field>
+        <field name="arch" type="xml">
+            <tree string="zone_code_view_tree">
+                <field name="name" />
+                <field name="zone_code" />
+            </tree>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='ecole.zone_code'>
+        <field name="name">Zone Code</field>
+        <field name="res_model">ecole.zone.code</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="act_zone_code_form_view" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="zone_code_view_form"/>
+        <field name="act_window_id" ref="ecole.zone_code"/>
+    </record>
+
+
+    <record id="act_zone_code_tree_view" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="zone_code_view_tree"/>
+        <field name="act_window_id" ref="ecole.zone_code"/>
+    </record>
+</odoo>
