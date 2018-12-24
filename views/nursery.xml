@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>
+<odoo>aaa
 <!--Vue Form enfants scolarisés cantine-->
         <record model="ir.ui.view" id="nursery_view_form">
             <field name="name">nursery.view.form</field>
